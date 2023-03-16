@@ -135,8 +135,29 @@
   margin-left: 8px;
   transition: all 0.3s;
 }
-</style>
+ header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
 
+  h1 {
+    font-size: 36px;
+    margin-bottom: 16px;
+  }
+
+  p {
+    font-size: 18px;
+    line-height: 1.5;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+</style>
+<header>
+  <h1>LinkerGen</h1>
+  <p>
+    LinkerGen is a powerful tool that simplifies sharing links across different platforms. It generates a single universal link that automatically redirects users to the appropriate app store or website, depending on their device and operating system. This tool is particularly useful for marketers, developers, and content creators who need to share their apps or websites with a diverse audience.
+  </p>
+</header>
 <form on:submit={handleSubmit}>
   <div>
     <label for="websiteUrl">Website URL:</label>
