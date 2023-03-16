@@ -20,6 +20,18 @@
     }
   };
 
+
+const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(generatedUrl);
+      alert('URL copied to clipboard');
+    } catch (err) {
+      console.error('Failed to copy URL: ', err);
+      alert('Failed to copy URL. Please try again.');
+    }
+  };
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     error.set('');
@@ -129,6 +141,7 @@
 {#if generatedUrl}
   <div>
     <h3>Generated URL:</h3>
-    <a href="{generatedUrl}" target="_blank" rel="noopener noreferrer">{generatedUrl}</a>
+      <a href="{generatedUrl}" target="_blank" rel="noopener noreferrer">{generatedUrl}</a>
+    <button on:click={copyToClipboard}>Copy Link</button>
   </div>
 {/if}
