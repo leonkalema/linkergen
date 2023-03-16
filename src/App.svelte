@@ -29,33 +29,18 @@
     }, 2000);
   }
 
-  async function isReachable(url) {
-  try {
-    const response = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
-    return response.status >= 200 && response.status < 400;
-  } catch (error) {
-    return false;
-  }
-}
+  
 
   async function handleSubmit(event) {
     event.preventDefault();
-  error.set('');
-  isLoading = true;
+    error.set('');
+    isLoading = true;
 
-  if (!isValidUrl(websiteUrl) || !isValidUrl(appleStoreUrl) || !isValidUrl(androidStoreUrl)) {
-    error.set('Please provide valid URLs for all fields.');
-    return;
-  }
-
-  const websiteReachable = await isReachable(websiteUrl);
-  const appleStoreReachable = await isReachable(appleStoreUrl);
-  const androidStoreReachable = await isReachable(androidStoreUrl);
-
-  if (!websiteReachable || !appleStoreReachable || !androidStoreReachable) {
-    error.set('One or more URLs are unreachable. Please provide valid URLs.');
-    return;
-  }
+    if (!isValidUrl(websiteUrl) || !isValidUrl(appleStoreUrl) || !isValidUrl(androidStoreUrl)) {
+      error.set('Please provide valid URLs for all fields.');
+      isLoading = false;
+      return;
+    }
 
     const payload = { websiteUrl, appleStoreUrl, androidStoreUrl };
     const response = await fetch('https://shy-tan-basket-clam-veil.cyclic.app/api/generate', {
