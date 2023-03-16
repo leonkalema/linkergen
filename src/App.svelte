@@ -29,7 +29,7 @@
     }
 
     const payload = { websiteUrl, appleStoreUrl, androidStoreUrl };
-    const response = await fetch('https://shy-tan-basket-clam-veil.cyclic.app/generate', {
+    const response = await fetch('https://shy-tan-basket-clam-veil.cyclic.app/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
