@@ -138,9 +138,19 @@
 </style>
 
 <form on:submit={handleSubmit}>
-  <!-- Your form elements -->
-
-  <button
+  <div>
+    <label for="websiteUrl">Website URL:</label>
+    <input type="url" id="websiteUrl" bind:value={websiteUrl} required />
+  </div>
+  <div>
+    <label for="appleStoreUrl">Apple Store URL:</label>
+    <input type="url" id="appleStoreUrl" bind:value={appleStoreUrl} required />
+  </div>
+  <div>
+    <label for="androidStoreUrl">Android Store URL:</label>
+    <input type="url" id="androidStoreUrl" bind:value={androidStoreUrl} required />
+  </div>
+ <button
     type="submit"
     class="generate-button"
     disabled={isLoading}
