@@ -8,6 +8,10 @@
   let androidStoreUrl = '';
    let generatedUrl = '';
   const error = writable('');
+  let isLoading = false;
+  let copyMessage = null;
+
+
 
   const showError = derived(error, ($error) => $error !== '');
 
@@ -20,21 +24,19 @@
     }
   };
 
-
-const copyToClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(generatedUrl);
-      alert('URL copied to clipboard');
-    } catch (err) {
-      console.error('Failed to copy URL: ', err);
-      alert('Failed to copy URL. Please try again.');
-    }
-  };
+async function copyToClipboard() {
+  await navigator.clipboard.writeText(generatedUrl);
+  copyMessage = 'Copied to clipboard!';
+  setTimeout(() => {
+    copyMessage = null;
+  }, 2000);
+}
 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     error.set('');
+    isLoading = true;
 
     if (!isValidUrl(websiteUrl) || !isValidUrl(appleStoreUrl) || !isValidUrl(androidStoreUrl)) {
       error.set('Please provide valid URLs for all fields.');
@@ -56,6 +58,13 @@ const copyToClipboard = async () => {
       error.set('Error generating URL. Please try again.');
     }
   };
+
+  function clearForm() {
+  websiteUrl = '';
+  appleStoreUrl = '';
+  androidStoreUrl = '';
+}
+  
 </script>
 
 <style>
@@ -116,6 +125,17 @@ const copyToClipboard = async () => {
     color: #d32f2f;
     font-weight: 500;
   }
+
+  .copy-message {
+  display: inline-block;
+  background-color: #4caf50;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-left: 8px;
+  transition: all 0.3s;
+}
 </style>
 
 <form on:submit={handleSubmit}>
@@ -131,17 +151,22 @@ const copyToClipboard = async () => {
     <label for="androidStoreUrl">Android Store URL:</label>
     <input type="url" id="androidStoreUrl" bind:value={androidStoreUrl} required />
   </div>
-  <button type="submit">Submit</button>
+  <button
+  type="submit"
+  class="generate-button"
+  disabled={isLoading}
+>
+  {isLoading ? 'Generating...' : 'Generate'}
+</button>
+
   {#if $showError}
     <p>{$error}</p>
   {/if}
 </form>
 
 
-{#if generatedUrl}
-  <div>
-    <h3>Generated URL:</h3>
-      <a href="{generatedUrl}" target="_blank" rel="noopener noreferrer">{generatedUrl}</a>
-    <button on:click={copyToClipboard}>Copy Link</button>
+{#if copyMessage}
+  <div class="copy-message">
+    {copyMessage}
   </div>
 {/if}
