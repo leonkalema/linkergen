@@ -6,6 +6,7 @@
   let websiteUrl = '';
   let appleStoreUrl = '';
   let androidStoreUrl = '';
+   let generatedUrl = '';
   const error = writable('');
 
   const showError = derived(error, ($error) => $error !== '');
@@ -37,8 +38,8 @@
 
     if (response.ok) {
       const data = await response.json();
-      // Display or handle the generated URL here
-      console.log('Generated URL:', data.generatedUrl);
+      generatedUrl = data.generatedUrl;
+      console.log('Generated URL:', generatedUrl);
     } else {
       error.set('Error generating URL. Please try again.');
     }
@@ -123,3 +124,11 @@
     <p>{$error}</p>
   {/if}
 </form>
+
+
+{#if generatedUrl}
+  <div>
+    <h3>Generated URL:</h3>
+    <a href="{generatedUrl}" target="_blank" rel="noopener noreferrer">{generatedUrl}</a>
+  </div>
+{/if}
